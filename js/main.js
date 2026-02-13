@@ -239,8 +239,9 @@ window.addEventListener('unhandledrejection', (e) => {
 });
 
 /* ================= MOBILE SLIDER FIXED ================= */
+/* ================= CLEAN MOBILE SLIDER ================= */
 
-function initMobileSlider() {
+document.addEventListener('DOMContentLoaded', function () {
 
   if (window.innerWidth > 768) return;
 
@@ -251,29 +252,18 @@ function initMobileSlider() {
 
   let currentIndex = 0;
 
-  // Remove all active classes first
-  cards.forEach(card => {
-    card.classList.remove('active-mobile');
-  });
+  function showImage(index) {
+    cards.forEach(card => card.classList.remove('active-mobile'));
+    cards[index].classList.add('active-mobile');
+  }
 
-  // Activate first image
-  cards[currentIndex].classList.add('active-mobile');
+  showImage(currentIndex);
 
   wrapper.addEventListener('click', function () {
-
-    // Remove current
-    cards[currentIndex].classList.remove('active-mobile');
-
-    // Move to next
     currentIndex = (currentIndex + 1) % cards.length;
-
-    // Add new
-    cards[currentIndex].classList.add('active-mobile');
-
+    showImage(currentIndex);
   });
 
-}
+});
 
-// Run after page loads
-document.addEventListener('DOMContentLoaded', initMobileSlider);
 
