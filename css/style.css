@@ -862,11 +862,18 @@ footer {
   transition: none !important;
 }
 
-/* ================= MOBILE SLIDER VERSION ================= */
+/* ================= MOBILE OVERRIDE FIX ================= */
+
 @media (max-width: 768px) {
+
+  /* Disable ALL stack rotations */
+  .showcase-img-wrapper:nth-child(n) {
+    transform: translate(-50%, -50%) !important;
+  }
 
   .showcase-container {
     height: 420px;
+    position: relative;
   }
 
   .showcase-img-wrapper {
@@ -875,19 +882,19 @@ footer {
     height: 100%;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     opacity: 0;
-    filter: blur(10px);
+    filter: blur(12px);
     transition: opacity 0.6s ease, filter 0.6s ease;
   }
 
   .showcase-img-wrapper.active-mobile {
     opacity: 1;
     filter: blur(0);
-    z-index: 10;
+    z-index: 20;
   }
 
 }
+
 
 
 
