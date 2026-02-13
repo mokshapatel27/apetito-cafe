@@ -42,34 +42,44 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     });
     
-  } else {
-    // DESKTOP: Original hover/click behavior
-    const firstCard = cards[0];
-    
-    firstCard.addEventListener('mouseenter', () => {
-      wrapper.classList.add('spread');
+ } else {
+  // DESKTOP: Original hover/click behavior
+  const firstCard = cards[0];
+  
+  firstCard.addEventListener('mouseenter', () => {
+    wrapper.classList.add('spread');
+    // Staggered animation
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.style.transform = getComputedStyle(card).transform;
+      }, index * 30);
     });
-    
-    cards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (card.classList.contains('active')) {
-          card.classList.remove('active');
-        } else {
-          cards.forEach(c => c.classList.remove('active'));
-          card.classList.add('active');
-        }
-      });
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!wrapper.contains(e.target)) {
-        wrapper.classList.remove('spread');
+  });
+  
+  wrapper.addEventListener('mouseleave', () => {
+    wrapper.classList.remove('spread');
+    cards.forEach(c => c.classList.remove('active'));
+  });
+  
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (card.classList.contains('active')) {
+        card.classList.remove('active');
+      } else {
         cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
       }
     });
-  }
-});
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!wrapper.contains(e.target)) {
+      wrapper.classList.remove('spread');
+      cards.forEach(c => c.classList.remove('active'));
+    }
+  });
+}
 
 // Scroll reveal
 function throttle(func, limit) {
