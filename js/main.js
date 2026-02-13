@@ -238,26 +238,42 @@ window.addEventListener('unhandledrejection', (e) => {
   console.error('Unhandled promise rejection:', e.reason);
 });
 
-/* ================= MOBILE IMAGE SLIDER ================= */
+/* ================= MOBILE SLIDER FIXED ================= */
 
-if (window.innerWidth <= 768) {
+function initMobileSlider() {
+
+  if (window.innerWidth > 768) return;
 
   const cards = document.querySelectorAll('.showcase-img-wrapper');
+  const wrapper = document.querySelector('.showcase-wrapper');
+
+  if (!cards.length) return;
+
   let currentIndex = 0;
 
-  function showImage(index) {
-    cards.forEach(card => card.classList.remove('active-mobile'));
-    cards[index].classList.add('active-mobile');
-  }
+  // Remove all active classes first
+  cards.forEach(card => {
+    card.classList.remove('active-mobile');
+  });
 
-  showImage(currentIndex);
+  // Activate first image
+  cards[currentIndex].classList.add('active-mobile');
 
-  document.querySelector('.showcase-wrapper').addEventListener('click', () => {
-    currentIndex++;
-    if (currentIndex >= cards.length) {
-      currentIndex = 0;
-    }
-    showImage(currentIndex);
+  wrapper.addEventListener('click', function () {
+
+    // Remove current
+    cards[currentIndex].classList.remove('active-mobile');
+
+    // Move to next
+    currentIndex = (currentIndex + 1) % cards.length;
+
+    // Add new
+    cards[currentIndex].classList.add('active-mobile');
+
   });
 
 }
+
+// Run after page loads
+document.addEventListener('DOMContentLoaded', initMobileSlider);
+
