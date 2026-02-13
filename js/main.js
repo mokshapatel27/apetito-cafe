@@ -237,3 +237,27 @@ window.addEventListener('error', (e) => {
 window.addEventListener('unhandledrejection', (e) => {
   console.error('Unhandled promise rejection:', e.reason);
 });
+
+/* ================= MOBILE IMAGE SLIDER ================= */
+
+if (window.innerWidth <= 768) {
+
+  const cards = document.querySelectorAll('.showcase-img-wrapper');
+  let currentIndex = 0;
+
+  function showImage(index) {
+    cards.forEach(card => card.classList.remove('active-mobile'));
+    cards[index].classList.add('active-mobile');
+  }
+
+  showImage(currentIndex);
+
+  document.querySelector('.showcase-wrapper').addEventListener('click', () => {
+    currentIndex++;
+    if (currentIndex >= cards.length) {
+      currentIndex = 0;
+    }
+    showImage(currentIndex);
+  });
+
+}
